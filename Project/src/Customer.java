@@ -3,7 +3,7 @@ import lombok.Data;
 @Data
 public class Customer {
     private static int idGenerator = 1;
-    private int id;
+    private final int id;
     private String fullName;
     private String email;
 
