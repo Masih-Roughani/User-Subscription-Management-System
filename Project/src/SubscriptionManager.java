@@ -3,6 +3,8 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
 public class SubscriptionManager {
@@ -28,5 +30,17 @@ public class SubscriptionManager {
 
     private void cancelSubscription(int subscriptionId) {
         subscriptions.remove(subscriptionId);
+    }
+
+    private List<Subscription> getActiveSubscriptions() {
+        return subscriptions.stream().filter(Subscription::isActive).collect(Collectors.toList());
+    }
+
+    public List<Service> getActiveServicesForCustomer(Customer customer) {
+        Map<Customer, List<Subscription>> map = subscriptions.stream().filter(Subscription::isActive)
+                .collect(Collectors.groupingBy(Subscription::getCustomer));
+
+        return map.getOrDefault(customer, List.of()).stream()
+                .map(Subscription::getService).collect(Collectors.toList());
     }
 }
