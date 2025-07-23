@@ -1,7 +1,7 @@
 import lombok.Data;
 
 @Data
-class Service {
+public class Service {
     private static int idGenerator = 1;
     private final int id;
     private String name;
